@@ -2,23 +2,9 @@
 import os
 from PIL import Image, ImageEnhance
 import pandas as pd
-from torch.utils.data import Dataset, DataLoader
-
-def enhance_frames(train_path: str, destination_path='.'):
-    #enhance the files, copy them into a different folder
-    for img in os.listdir(train_path):
-        im = Image.open('{}/{}'.format(train_path, img))
-
-        brightness = ImageEnhance.Brightness(im)
-        im = brightness.enhance(1.5)
-
-        contrast = ImageEnhance.Contrast(im)
-        im = contrast.enhance(2)
-
-        sharpness = ImageEnhance.Sharpness(im)
-        im = sharpness.enhance(2)
-
-        im = im.save(destination_path + '/trainbright/%s' %img)
+import argparse
+from torch.utils.data import Dataset,DataLoader
+from torchvision import transforms
 
 # define a custom PyTorch dataset that can be used to feed into a DataLoader
 class imageDataset(Dataset):
@@ -37,7 +23,6 @@ class imageDataset(Dataset):
 	def __getitem__(self, idx):
 		label = self.dataframe.label.values[idx]
 		im = Image.open(self.root_dir+"/frame"+self.dataframe.frame.values[idx]+".jpg")
-
 		#TODO: normalize image according to its own mean by channel
 		if self.transform:
 			im = self.transform(im)
