@@ -1,6 +1,5 @@
 import cv2
 import pandas as pd
-import vidcap
 from pathlib import Path
 
 # loads the label data into a pandas.DataFrame object
