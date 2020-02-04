@@ -6,6 +6,7 @@ import os
 from PIL import Image, ImageEnhance
 import pandas as pd
 import argparse
+from pathlib import Path
 
 from torch.utils.data import Dataset,DataLoader
 from torchvision import transforms
@@ -23,33 +24,45 @@ def load_data_labels(filename: str) -> pd.DataFrame:
 	# return the dataFrame object
 	return data
 
+# video is the path to the video
+# destination is the final folder in which you want to store the train folder
+# example: video_to_frames('train.mp4', './data')
+# result: ./data/train/frame0.jpg ......
 def video_to_frames(video: str, destination='.') -> str:
 	vidcap = cv2.VideoCapture(video)
 	success,image = vidcap.read()
 	count = 0
 
+	# make the directory to store the frames
+	Path(destination + '/train').mkdir(parents=True, exist_ok=True)
+
 	# write raw frames to local files
 	while success:
-		cv2.imwrite(destination + '/train/frame%d.jpg' % count, image)     # save frame as JPEG file
+		if not cv2.imwrite(destination + '/train/frame' + str(count) + '.jpg', image):    # save frame as JPEG file
+			raise Exception("Could not write image")
 		success,image = vidcap.read()
 		print('Read a new frame: ', success)
 		count += 1
 
-def enhance_frames(train_path: str, destination_path='.'):
+def enhance_frames(train_path: str, destination='.'):
     #enhance the files, copy them into a different folder
-    for img in os.listdir(train_path):
-        im = Image.open('{}/{}'.format(train_path, img))
 
-        brightness = ImageEnhance.Brightness(im)
-        im = brightness.enhance(1.5)
+	# creates the path to store transformed images
+	Path(destination + '/trainbright').mkdir(parents=True, exist_ok=True)
 
-        contrast = ImageEnhance.Contrast(im)
-        im = contrast.enhance(2)
+	for img in os.listdir(train_path):
+	    im = Image.open('{}/{}'.format(train_path, img))
 
-        sharpness = ImageEnhance.Sharpness(im)
-        im = sharpness.enhance(2)
+	    brightness = ImageEnhance.Brightness(im)
+	    im = brightness.enhance(1.5)
 
-        im = im.save(destination + '/trainbright/%s' %img)
+	    contrast = ImageEnhance.Contrast(im)
+	    im = contrast.enhance(2)
+
+	    sharpness = ImageEnhance.Sharpness(im)
+	    im = sharpness.enhance(2)
+
+	    im = im.save(destination + '/trainbright/%s' %img)
 
 
 # define a custom PyTorch dataset that can be used to feed into a DataLoader
@@ -85,7 +98,6 @@ if __name__ == "__main__":
 		help='Path to the data folder.')
 	args = parser.parse_args()
 	data_folder_path = args.data_path
-
 
 	# transform the image into something that can be fed to a neural network - we convert to tensor because neural networks want arrays of pixels
 	train_transform = transforms.Compose([
