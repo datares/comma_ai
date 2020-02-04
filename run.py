@@ -18,7 +18,6 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	data_folder_path = args.data_path
-
 	# transforms
 	train_transform = transforms.Compose([transforms.ToTensor()])
 	# TODO use transforms.Normalize w/ stdev and var
