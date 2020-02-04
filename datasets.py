@@ -84,8 +84,8 @@ if __name__ == "__main__":
 	])
 
 	# load the data labels into a pandas DataFrame
-	data_labels = load_data_labels('../data/traintxt.txt')
-	print(data_labels)
+	data_labels = load_data_labels('traintxt.txt')
+	
 	#initialize a training dataset
 	trainset = imageDataset(data_labels, 'trainbright', transform=train_transform)
 
