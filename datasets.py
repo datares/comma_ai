@@ -76,6 +76,13 @@ if __name__ == "__main__":
         #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) <-- this is imagenet
         ])
 
+    # Checking directories train and trainbright exists
+    if not os.path.exists('train'):
+        os.makedirs('train')
+    
+    if not os.path.exists('trainbright'):
+        os.makedirs('trainbright')
+
     #initialize a training dataset
     trainset = imageDataset(data, 'trainbright', transform =train_transform)
 
