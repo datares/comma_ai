@@ -8,6 +8,11 @@ import pandas as pd
 from torch.utils.data import Dataset,DataLoader
 from torchvision import transforms
 
+if not os.path.exists('./train/'):
+    os.makedirs('./train/')
+if not os.path.exists('./train_path/'):
+    os.makedirs('./train_path')
+
 
 # TODO we should use a function instead of having a global variable data
 # Load the labels into python with using a pandas DataFrame
