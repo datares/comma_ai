@@ -53,7 +53,7 @@ def enhance_frames(train_path: str):
 
 # define a custom PyTorch dataset that can be used to feed into a DataLoader
 class imageDataset(Dataset):
-    """
+	"""
 	A custome PyTorch dataset that can be fed into a DataLoader.
 	usage: imageDataset(dataframe: pandas.DataFrame, root_dir: str, transform: function)
 	"""
@@ -77,31 +77,31 @@ class imageDataset(Dataset):
 
 
 if __name__ == "__main__":
-    # transform the image into something that can be fed to a neural network - we convert to tensor because neural networks want arrays of pixels
-    train_transform = transforms.Compose([
-        transforms.ToTensor()
-        #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) <-- this is imagenet
-    ])
+	# transform the image into something that can be fed to a neural network - we convert to tensor because neural networks want arrays of pixels
+	train_transform = transforms.Compose([
+	    transforms.ToTensor()
+	    #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) <-- this is imagenet
+	])
 
 	# load the data labels into a pandas DataFrame
-	data_labels = load_data_labels('traintxt.txt')
+	data_labels = load_data_labels('../data/traintxt.txt')
+	print(data_labels)
+	#initialize a training dataset
+	trainset = imageDataset(data_labels, 'trainbright', transform=train_transform)
 
-    #initialize a training dataset
-    trainset = imageDataset(data_labels, 'trainbright', transform=train_transform)
+	# to test --> print(trainset.__getitem__(0))
 
-    # to test --> print(trainset.__getitem__(0))
+	# create a dataloader - batch_size and num_workers will have to be tuned as time goes on
 
-    # create a dataloader - batch_size and num_workers will have to be tuned as time goes on
+	# we don't shuffle yet because the order of the data matters
+	# TODO we should probably shuffle, but pick batches of images that are related to themselves.
+	# TODO how do we do this with pytorch?
 
-    # we don't shuffle yet because the order of the data matters
-    # TODO we should probably shuffle, but pick batches of images that are related to themselves.
-    # TODO how do we do this with pytorch?
+	# TODO change batch_size
+	# TODO change num_workers, your cpu has more cores for a reason!
+	train_loader = DataLoader(trainset, batch_size=1, shuffle=False, num_workers=1)
 
-    # TODO change batch_size
-    # TODO change num_workers, your cpu has more cores for a reason!
-    train_loader = DataLoader(trainset, batch_size=1, shuffle=False, num_workers=1)
-
-    # TODO can we do this with PyTorch/sklearn(!!!!)?
-    # one example of how to create a validation set - sloppy, but this is one way to do it
-    val = data[16000:]
-    val.reset_index(drop=True,inplace=True)
+	# TODO can we do this with PyTorch/sklearn(!!!!)?
+	# one example of how to create a validation set - sloppy, but this is one way to do it
+	val = data_labels[16000:]
+	val.reset_index(drop=True,inplace=True)
