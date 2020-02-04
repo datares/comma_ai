@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
     # TODO change batch_size
     # TODO change num_workers, your cpu has more cores for a reason!
-    train_loader = DataLoader(trainset, batch_size=1, shuffle=False, num_workers=1)
+    train_loader = DataLoader(trainset, batch_size=1, shuffle=False, num_workers=4)
 
     # TODO can we do this with PyTorch/sklearn(!!!!)?
     # one example of how to create a validation set - sloppy, but this is one way to do it
