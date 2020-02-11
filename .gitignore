@@ -1,3 +1,10 @@
 .DS_Store
 train/
 trainbright/
+test/
+data/
+train.mp4
+test.mp4
+traintxt.txt
+__pycache__/
+.vscode/
