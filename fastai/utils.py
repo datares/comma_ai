@@ -2,6 +2,7 @@ import os
 import cv2
 import pandas as pd
 from pathlib import Path
+from PIL import Image, ImageEnhance
 
 # loads the label data into a pandas.DataFrame object
 def load_data_labels(filename: str) -> pd.DataFrame:
