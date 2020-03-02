@@ -3,7 +3,7 @@ import os
 from PIL import Image, ImageEnhance
 import pandas as pd
 import argparse
-from torch.utils.data import Dataset,DataLoader
+from torch.utils.data import Dataset,DataLoader,SubsetRandomSampler
 from torchvision import transforms
 
 # define a custom PyTorch dataset that can be used to feed into a DataLoader
@@ -22,7 +22,7 @@ class imageDataset(Dataset):
 
 	def __getitem__(self, idx):
 		label = self.dataframe.label.values[idx]
-		im = Image.open(self.root_dir+"/frame"+self.dataframe.frame.values[idx]+".jpg")
+		im = Image.open(self.root_dir+"/frame"+str(self.dataframe.frame.values[idx])+".jpg")
 		#TODO: normalize image according to its own mean by channel
 		if self.transform:
 			im = self.transform(im)

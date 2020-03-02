@@ -39,7 +39,7 @@ if __name__ == "__main__":
 	val.reset_index(drop=True,inplace=True)
 
 	#
-	x_train = DataBunch(train_loader)
+	#x_train = DataBunch(train_loader)
 
 
 
