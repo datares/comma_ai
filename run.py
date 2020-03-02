@@ -21,28 +21,10 @@ if __name__ == "__main__":
 
 	data_folder_path = args.data_path
 
-	#calculate mean and stdev
-	#
-	'''
-		adapted from 
-		* https://medium.com/swlh/image-classification-tutorials-in-pytorch-transfer-learning-19ebc329e200
-	'''
-	mean = 0.
-	std = 0.
-	nb_samples = len(data)
-	for data,_ in dataloader:
-		batch_samples = data.size(0)
-		data = data.view(batch_samples, data.size(1), -1)
-		mean += data.mean(2).sum(0)
-		std += data.std(2).sum(0)
-	mean /= nb_samples
-	std /= nb_samples
-
 	# transforms
-	# transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) <-- this is imagenet
 	train_transform = transforms.Compose([
 		transforms.ToTensor(),
-		transforms.Normalize([mean], [std])
+		transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 	])
 
 	# load the data labels into a pandas DataFrame
