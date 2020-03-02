@@ -31,7 +31,7 @@ def video_to_frames(video: str, destination='.') -> str:
 
 	# write raw frames to local files
 	while success:
-		if not cv2.imwrite(destination + '/train/frame' + str(count) + '.jpg', image):    # save frame as JPEG file
+		if not cv2.imwrite(destination + '/train/' + str(count) + '.jpg', image):    # save frame as JPEG file 
 			raise Exception("Could not write image")
 		success,image = vidcap.read()
 		print('Read a new frame: ', success)
