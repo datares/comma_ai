@@ -1,11 +1,9 @@
 import os 
 import argparse
-from torchvision import transforms
 from torchvision import datasets
 from torch.utils.data import Dataset,DataLoader
 from datasets import imageDataset
 from utils import load_data_labels
-import numpy as np
 
 if not os.path.exists('./train/'):
 	os.makedirs('./train/')
