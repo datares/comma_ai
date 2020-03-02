@@ -1,6 +1,6 @@
 import os 
 import argparse
-from torchvision import datasets
+from torchvision import transforms
 from torch.utils.data import Dataset,DataLoader
 from datasets import imageDataset
 from utils import load_data_labels
