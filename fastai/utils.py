@@ -2,7 +2,6 @@ import os
 import cv2
 import pandas as pd
 from pathlib import Path
-import os
 from PIL import Image, ImageEnhance
 
 # loads the label data into a pandas.DataFrame object
@@ -32,12 +31,11 @@ def video_to_frames(video: str, destination='.') -> str:
 
 	# write raw frames to local files
 	while success:
-		if not cv2.imwrite(destination + '/train/frame' + str(count) + '.jpg', image):    # save frame as JPEG file
+		if not cv2.imwrite(destination + '/train/' + str(count) + '.jpg', image):    # save frame as JPEG file 
 			raise Exception("Could not write image")
 		success,image = vidcap.read()
-		print('Read frame ' + str(count) + ': ', success)
+		print('Read a new frame: ', success)
 		count += 1
-
 def enhance_frames(train_path: str, destination='.'):
 	# enhance the files, copy them into a different folder
 	# creates the path to store transformed images
@@ -56,4 +54,3 @@ def enhance_frames(train_path: str, destination='.'):
 
 		im = im.save(destination + '/trainbright/%s' %img)
 
-# enhance_frames("./train")
