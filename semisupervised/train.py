@@ -9,9 +9,6 @@ def adjust_learning_rate(optimizer, epoch):
     # lr *= (0.1 ** (epoch // 30))
     for param_group in optimizer.param_groups:
         param_group['lr'] *= (0.1 ** (epoch // 30))
-
-
-# train 1 epoch
 def train_one_epoch(model, train_loader, optimizer, criterion, epoch, batch_size=100):
     model.train()
     step = 0
@@ -38,7 +35,6 @@ def train_one_epoch(model, train_loader, optimizer, criterion, epoch, batch_size
 
     length = len(train_loader.dataset) // batch_size
     return train_loss / length, train_acc / length
-
 def test(model, test_loader):
     model.eval()
     correct = 0
@@ -50,9 +46,7 @@ def test(model, test_loader):
 
     acc = 100.0 * float(correct) / len(test_loader.dataset)
     return acc
-
 def train(train_loader, initial_learning_rate, test_loader=[], initial_momentum=0, epoch_num=5):
-
     model = resnet18()
     criterion = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=initial_learning_rate)#, momentum=initial_momentum)
