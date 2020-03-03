@@ -17,7 +17,6 @@ def load_data_labels(filename: str) -> pd.DataFrame:
 	data = data[['frame','label']]
 	# return the dataFrame object
 	return data
-
 # video is the path to the video
 # destination is the final folder in which you want to store the train folder
 # example: video_to_frames('train.mp4', './data')
@@ -37,7 +36,6 @@ def video_to_frames(video: str, destination='.') -> str:
 		success,image = vidcap.read()
 		print('Read frame ' + str(count) + ': ', success)
 		count += 1
-
 def enhance_frames(train_path: str, destination='.'):
 	# enhance the files, copy them into a different folder
 	# creates the path to store transformed images

@@ -50,7 +50,6 @@ def train(train_loader, initial_learning_rate, test_loader=[], initial_momentum=
     model = resnet18()
     criterion = nn.MSELoss()
     optimizer = optim.SGD(model.parameters(), lr=initial_learning_rate)#, momentum=initial_momentum)
-
     for epoch in range(1, epoch_num+1):
         train_one_epoch(model, train_loader, optimizer, criterion, epoch)
         #acc = test(model, test_loader)

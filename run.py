@@ -22,6 +22,7 @@ if __name__ == "__main__":
 
 	# transforms
 	train_transform = transforms.Compose([
+		transforms.Resize([32,32]),
 		transforms.ToTensor(),
 		transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 	])
@@ -33,7 +34,7 @@ if __name__ == "__main__":
 
 	# we don't shuffle yet because the order of the data matters
 	# TODO we should probably shuffle, but pick batches of images that are related to themselves.
-	train_loader = DataLoader(trainset, batch_size=8, shuffle=False, num_workers=4)
+	train_loader = DataLoader(trainset, batch_size=1, shuffle=False, num_workers=4)
 
 	# TODO can we do this with PyTorch/sklearn(!!!!)?
 	# one example of how to create a validation set - sloppy, but this is one way to do it
