@@ -102,7 +102,7 @@ def opticalFlowDense(image_current, image_next):
     # value corresponds to magnitude
     hsv[:,:,2] = cv2.normalize(mag,None,0,255,cv2.NORM_MINMAX)
     
-    # convert HSV to float32's
+ 
     hsv = np.asarray(hsv, dtype= np.float32)    
 
     rgb_flow = cv2.cvtColor(hsv,cv2.COLOR_HSV2RGB)
