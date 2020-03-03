@@ -18,10 +18,12 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	data_folder_path = args.data_path
+
 	# transforms
-	train_transform = transforms.Compose([transforms.ToTensor()])
-	# TODO use transforms.Normalize w/ stdev and var
-	# transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) <-- this is imagenet
+	train_transform = transforms.Compose([
+		transforms.ToTensor(),
+		transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+	])
 
 	# load the data labels into a pandas DataFrame
 	ys = load_data_labels(data_folder_path + '/traintxt.txt')
