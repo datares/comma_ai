@@ -1,9 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from models import resnet50
+from semisupervised.models import resnet18
 from tqdm import tqdm
-
 
 def adjust_learning_rate(optimizer, epoch):
     """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
@@ -21,7 +20,6 @@ def train_one_epoch(model, train_loader, optimizer, criterion, epoch, batch_size
     for data, target in tqdm(train_loader, desc="epoch " + str(epoch), mininterval=1):
         adjust_learning_rate(optimizer, epoch)
         # data, target = data.to(device), target.to(device)
-
         optimizer.zero_grad()
         output = model(data)
         loss = criterion(output, target)
@@ -53,15 +51,13 @@ def test(model, test_loader):
     acc = 100.0 * float(correct) / len(test_loader.dataset)
     return acc
 
-def train(train_loader, test_loader, initial_learning_rate, initial_momentum):
+def train(train_loader, initial_learning_rate, test_loader=[], initial_momentum=0, epoch_num=5):
 
-    model = resnet50()
+    model = resnet18()
     criterion = nn.MSELoss()
-    optimizer = optim.SGD(model.parameters(), lr=initial_learning_rate, momentum=initial_momentum)
+    optimizer = optim.SGD(model.parameters(), lr=initial_learning_rate)#, momentum=initial_momentum)
 
     for epoch in range(1, epoch_num+1):
         train_one_epoch(model, train_loader, optimizer, criterion, epoch)
-        acc = test(model, test_loader)
-        print("Test accuracy: {.3f}%".format(acc))
-
-    # TODO:  save the trained model
+        #acc = test(model, test_loader)
+        #print("Test accuracy: {.3f}%".format(acc))

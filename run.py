@@ -4,6 +4,7 @@ from torchvision import transforms
 from torch.utils.data import Dataset,DataLoader
 from datasets import imageDataset
 from utils import load_data_labels
+from semisupervised.train import train
 
 if not os.path.exists('./train/'):
 	os.makedirs('./train/')
@@ -38,3 +39,6 @@ if __name__ == "__main__":
 	# one example of how to create a validation set - sloppy, but this is one way to do it
 	val = ys[16000:]
 	val.reset_index(drop=True,inplace=True)
+
+	train(train_loader, 0.001)
+	
